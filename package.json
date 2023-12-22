@@ -1,0 +1,14 @@
+{
+  "name": "todoprojectreact",
+  "version": "1.0.0",
+  "description": "in this simple project, am practice react, creating a task list",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "standard": "^17.1.0"
+  }
+}

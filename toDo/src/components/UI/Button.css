@@ -1,0 +1,91 @@
+:root {
+  --bs-white: #fff;
+  --bs-none-radius: 0;
+}
+
+.btn {
+  color: var(--bs-white);
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  -webkit-border-radius: 0.375rem;
+  -moz-border-radius: 0.375rem;
+  -ms-border-radius: 0.375rem;
+  -o-border-radius: 0.375rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-transition: color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  -moz-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -ms-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -o-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-group {
+  display: inline-flex;
+  justify-content: end;
+  padding-bottom: 1px;
+  padding-right: 1px;
+}
+
+.btn-edit-task {
+  background-color: #0d6efd;
+  border: 1px solid #0d6efd;
+  border-radius: var(--bs-none-radius);
+  -webkit-border-radius: var(--bs-none-radius);
+  -moz-border-radius: var(--bs-none-radius);
+  -ms-border-radius: var(--bs-none-radius);
+  -o-border-radius: var(--bs-none-radius);
+}
+
+.btn-edit-task:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+.btn-edit-task:active {
+  background-color: #0a58ca;
+}
+
+.btn-task-done {
+  background-color: #198754;
+  border: 1px solid #198754;
+  border-top-right-radius: var(--bs-none-radius);
+  border-bottom-right-radius: var(--bs-none-radius);
+}
+
+.btn-task-done:hover {
+  background-color: #157347;
+  border-color: #146c43;
+}
+
+.btn-task-done:active {
+  background-color: #146c43;
+}
+
+.btn-delete-task {
+  background-color: #dc3545;
+  border: 1px solid #dc3545;
+  border-top-left-radius: var(--bs-none-radius);
+  border-bottom-left-radius: var(--bs-none-radius);
+}
+
+.btn-delete-task:hover {
+  background-color: #bb2d3b;
+  border-color: #b02a37;
+}
+
+.btn-delete-task:active {
+  background-color: #b02a37;
+}

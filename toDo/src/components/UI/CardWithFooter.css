@@ -1,0 +1,51 @@
+:root {
+  --bs-black: #1a1b1c;
+  --bs-gray: rgba(255, 255, 255, 0.15);
+  --bs-white: #fff;
+  --bs-greenStrong: #005a34;
+  --bs-greenMediumStrong: #43655a;
+}
+
+.card,
+.card-task__done {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: var(--bs-black);
+  word-wrap: break-word;
+  background-color: #fff;
+  box-shadow: 3px 2px 10px 1px #bebebe;
+  border-radius: 0.375rem;
+  -webkit-border-radius: 0.375rem;
+  -moz-border-radius: 0.375rem;
+  -ms-border-radius: 0.375rem;
+  -o-border-radius: 0.375rem;
+  text-align: left;
+  transition: border-top 0.6s cubic-bezier(0.11, 0, 0.5, 0) 0s;
+  -webkit-transition: border-top 0.6s cubic-bezier(0.11, 0, 0.5, 0) 0s;
+  -moz-transition: border-top 0.6s cubic-bezier(0.11, 0, 0.5, 0) 0s;
+  -ms-transition: border-top 0.6s cubic-bezier(0.11, 0, 0.5, 0) 0s;
+  -o-transition: border-top 0.6s cubic-bezier(0.11, 0, 0.5, 0) 0s;
+}
+
+.card-task__done {
+  border-top: 0.65rem inset #20ffa1;
+}
+
+.card-header {
+  padding: 0.5rem 1rem;
+  margin-bottom: 0;
+  font-weight: bold;
+  color: var(--bs-greenMediumStrong);
+}
+
+.card-body {
+  flex: 1 1 auto;
+  padding: 1rem 1rem;
+  color: var(--bs-black);
+}
+
+.card-footer {
+  padding: 0.5rem 1rem;
+}
