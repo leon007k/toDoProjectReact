@@ -10,3 +10,11 @@
 .text-green {
   color: #005a34;
 }
+
+.btn-icon-link:hover .task-icon {
+  transform: rotate(6deg);
+  -webkit-transform: rotate(6deg);
+  -moz-transform: rotate(6deg);
+  -ms-transform: rotate(6deg);
+  -o-transform: rotate(6deg);
+}

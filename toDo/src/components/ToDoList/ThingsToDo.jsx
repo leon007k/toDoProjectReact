@@ -6,7 +6,7 @@ export const ThingsToDo = ({ taskToDo }) => {
   // * It is validated that there are added tasks, in case of not existing, we show alternate text
   let EnlistTasks = taskToDo.length > 0 ?
     (
-      EnlistTasks.map(task => (
+      taskToDo.map(task => (
         <CardWithFooter
           key={task?.id}
           cardBodyContent={task?.description}

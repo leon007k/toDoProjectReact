@@ -32,6 +32,10 @@
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.btn:focus {
+  outline: none;
+}
+
 .btn-group {
   display: inline-flex;
   justify-content: end;
@@ -88,4 +92,30 @@
 
 .btn-delete-task:active {
   background-color: #b02a37;
+}
+
+.btn-icon-link {
+  margin: 0 0 0 auto;
+  width: 60%;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background-color: var(--bs-white);
+  color: #0d6efd;
+  border-color: #003c95;
+  justify-content: center;
+}
+
+.btn-icon-link:hover {
+  color: var(--bs-white);
+  background-color: #0d6efd;
+}
+
+.btn-icon-link .task-icon {
+  transition: transform 0.15s ease-in-out;
+  -webkit-transition: transform 0.15s ease-in-out;
+  -moz-transition: transform 0.15s ease-in-out;
+  -ms-transition: transform 0.15s ease-in-out;
+  -o-transition: transform 0.15s ease-in-out;
 }
