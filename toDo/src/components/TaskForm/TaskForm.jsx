@@ -12,15 +12,28 @@ export const TaskForm = ({ modalDinamic, funcToPerform, typeOfAction = 'add', ta
   })
   const [requiredTitle, setRequiredTitle] = useState(false)
 
+  // ! ToDo, mejorar la forma en que se trabaja la funcion del enter para guardar ajustes
   useEffect(() => {
     const saveData = evt => {
-      if (evt.key === 'Enter' && inputsValues.titleTask.length > 0) registerTask()
+      debugger
+      if (evt.key === 'Enter' && inputsValues.titleTask.length > 0) {
+        registerTask()
+      } else if (evt.key === 'Enter') {
+        alertRequireTitle()
+      }
     }
 
     window.addEventListener('keydown', saveData)
-    return () => window.removeEventListener('keydown', saveData)
-  }, [])
 
+    return () => window.removeEventListener('keydown', saveData)
+  })
+
+  const alertRequireTitle = () => {
+    debugger
+    setRequiredTitle(true)
+    alert('Lo sentimos, favor de agregar un titulo a su tarea')
+    return
+  }
 
   // * Functions responsible for obtaining the values entered
   const addTitleTask = event => {
@@ -41,11 +54,7 @@ export const TaskForm = ({ modalDinamic, funcToPerform, typeOfAction = 'add', ta
     // * Condition in case the data is stored by clicking on
     if (event != undefined) event.preventDefault()
 
-    if (!inputsValues.titleTask.trim()) {
-      setRequiredTitle(true)
-      alert('Lo sentimos, favor de agregar un titulo a su tarea')
-      return
-    }
+    if (!inputsValues.titleTask.trim()) alertRequireTitle()
 
     let newtaskTodo
 
@@ -109,5 +118,5 @@ TaskForm.propTypes = {
   modalDinamic: PropTypes.func,
   funcToPerform: PropTypes.func,
   typeOfAction: PropTypes.string,
-  taskData: PropTypes.object
+  taskData: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 }

@@ -1,7 +1,6 @@
 import './App.css'
 import { useState } from 'react'
 import { ThingsToDo } from './components/ToDoList/ThingsToDo.jsx';
-import { AddNewTaskForm } from './components/AddNewTask/AddNewTaskForm.jsx';
 import { TaskForm } from './components/TaskForm/TaskForm.jsx';
 import { Button } from './components/UI/Button.jsx';
 
@@ -24,13 +23,6 @@ function App() {
     idTaskModal: '',
   })
 
-  // * We control the option to show the modal
-  const onOffModal = () => {
-    console.log('Before: ' + isShowModal)
-    setIsShowModal(!isShowModal)
-    console.log('after: ' + isShowModal)
-  };
-
   // * We allow the information of the pending task to be saved
   const registerNewTask = (newTask) => {
     setNewTask(prevListTask => {
@@ -39,7 +31,7 @@ function App() {
     )
   }
 
-  // * Nos permitira eliminar una tarea de nuestro listado
+  // * It will allow us to eliminate a task from our list
   const deleteTask = idTask => {
     setNewTask(prevListTask => {
       const updateDListTask = prevListTask.filter(taskFilter => taskFilter.id !== idTask)
@@ -48,7 +40,7 @@ function App() {
     })
   }
 
-  // * Nos permitira editar una tarea de nuestro listado
+  // * It will allow us to edit a task of our list
   const editTask = taskDataToEdit => {
     setNewTask(prevListTask => {
       const updateEListTask = prevListTask.map(taskFilter => {
@@ -66,10 +58,10 @@ function App() {
     })
   }
 
+  // * This function allows us to be more dynamic, for the option of sour or editing tasks
   const modalDinamic = (typeOfAction, indexOfTask) => {
-    debugger
     setIsShowModal(!isShowModal)
-    if (indexOfTask) {
+    if (indexOfTask >= 0) {
       setModalDynamicContent({
         typeOfActionModal: typeOfAction,
         indexTaskModal: indexOfTask
@@ -81,15 +73,17 @@ function App() {
     }
   }
 
+  const validateTaskData = modalDynamicContent.indexTaskModal >= 0
+    ? taskToDo[modalDynamicContent.indexTaskModal]
+    : ''
 
   return (
     <>
-      {/* isShowModal && <AddNewTaskForm onOffModal={onOffModal} registerNewTask={registerNewTask} /> */}
       {isShowModal && <TaskForm
         modalDinamic={modalDinamic}
         funcToPerform={modalDynamicContent.typeOfActionModal === 'add' ? registerNewTask : editTask}
         typeOfAction={modalDynamicContent.typeOfActionModal}
-        taskData={modalDynamicContent.indexTaskModal && taskToDo[modalDynamicContent.indexTaskModal]}
+        taskData={validateTaskData}
       />}
       <h1 className='text-green'>Lista de pendientes a realizar</h1>
       <Button typeButton='button' addClassName='btn-icon-link' actionButton={() => modalDinamic('add')}>
