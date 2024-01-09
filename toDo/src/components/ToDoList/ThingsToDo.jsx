@@ -16,8 +16,8 @@ export const ThingsToDo = ({ taskToDo, onDeleteTask, onEditTask }) => {
   }
 
   const deleteTaskHandler = taskId => {
-    // ! TODO: solicitar al cliente que confirme eliminar la tarea
-    onDeleteTask(taskId)
+    const wantToDeleteTask = confirm("¿Estas seguro de eliminar la tarea?")
+    wantToDeleteTask && onDeleteTask(taskId)
   }
 
   const editTaskHandler = taskId => {

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Button } from '../UI/Button';
 import { Modal } from '../UI/Modal'
 import './TaskForm.css'
@@ -12,24 +12,15 @@ export const TaskForm = ({ modalDinamic, funcToPerform, typeOfAction = 'add', ta
   })
   const [requiredTitle, setRequiredTitle] = useState(false)
 
-  // ! ToDo, mejorar la forma en que se trabaja la funcion del enter para guardar ajustes
   useEffect(() => {
-    const saveData = evt => {
-      debugger
-      if (evt.key === 'Enter' && inputsValues.titleTask.length > 0) {
-        registerTask()
-      } else if (evt.key === 'Enter') {
-        alertRequireTitle()
-      }
-    }
-
-    window.addEventListener('keydown', saveData)
-
-    return () => window.removeEventListener('keydown', saveData)
-  })
+    if (typeOfAction === 'edit')
+      setInputsValues({
+        titleTask: taskData?.title || '',
+        descriptionTask: taskData?.description || ''
+      })
+  }, [typeOfAction, taskData])
 
   const alertRequireTitle = () => {
-    debugger
     setRequiredTitle(true)
     alert('Lo sentimos, favor de agregar un titulo a su tarea')
     return
@@ -49,12 +40,22 @@ export const TaskForm = ({ modalDinamic, funcToPerform, typeOfAction = 'add', ta
     })
   }
 
-  // * function in charge of sending the information
-  const registerTask = (event) => {
-    // * Condition in case the data is stored by clicking on
-    if (event != undefined) event.preventDefault()
+  /* 
+  * function in charge of sending the information 
+   * When using Usecallback, you make sure that the UseEffect is not unnecessarily executed 
+   * Every time the component is rendered due to the recreation of the Registertask function.
+  */
 
-    if (!inputsValues.titleTask.trim()) alertRequireTitle()
+  const registerTask = useCallback((event) => {
+    // * Condition in case the data is stored by clicking on
+    if (event !== undefined) event.preventDefault()
+
+    const isTitleValid = inputsValues.titleTask.trim() !== ''
+
+    if (!isTitleValid) {
+      alertRequireTitle()
+      return
+    }
 
     let newtaskTodo
 
@@ -84,7 +85,22 @@ export const TaskForm = ({ modalDinamic, funcToPerform, typeOfAction = 'add', ta
 
     // * We close the modal after finishing saving the data
     modalDinamic()
-  }
+  }, [inputsValues.titleTask, inputsValues.descriptionTask, taskData, funcToPerform, setInputsValues, modalDinamic])
+
+  useEffect(() => {
+    const saveData = evt => {
+      if (modalDinamic && evt.key === 'Enter' && inputsValues.titleTask.length > 0) {
+        registerTask()
+      } else if (modalDinamic && evt.key === 'Enter') {
+        alertRequireTitle()
+        return
+      }
+    }
+
+    window.addEventListener('keydown', saveData)
+
+    return () => window.removeEventListener('keydown', saveData)
+  }, [inputsValues.titleTask, registerTask, modalDinamic])
 
   return (
     <Modal modalTitle={typeOfAction === 'add' ? 'Agregar nueva tarea' : 'Editar tarea'} onOffModal={modalDinamic}>
@@ -92,11 +108,21 @@ export const TaskForm = ({ modalDinamic, funcToPerform, typeOfAction = 'add', ta
         <div className='modal-body'>
           <div id="TitleOfTask" className='mb-1'>
             <label htmlFor='titleTask' className='form-label'>Titulo de tu tarea</label>
-            <input type="text" className={`form-control ${requiredTitle && 'required'}`} id="titleTask" required onChange={addTitleTask} defaultValue={taskData?.title} />
+            <input type="text"
+              className={`form-control ${requiredTitle && 'required'}`}
+              id="titleTask"
+              required
+              defaultValue={taskData?.title}
+              onChange={addTitleTask}
+            />
           </div>
           <div id="DescriptionOfTask" className='mb-1'>
             <label htmlFor='descriptionTask' className='form-label'>Descripción de la tarea</label>
-            <textarea className='form-control' id='descriptionTask' onChange={addDescriptionTask} defaultValue={taskData?.description}></textarea>
+            <textarea
+              className='form-control'
+              id='descriptionTask'
+              defaultValue={taskData?.description}
+              onChange={addDescriptionTask}></textarea>
           </div>
         </div>
         <div className='modal-footer'>
