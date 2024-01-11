@@ -56,7 +56,7 @@ export const ThingsToDo = ({ taskToDo, onDeleteTask, onEditTask }) => {
     (
       <section className='empty-task'>
         <p className='empty-task__text'>Aun no tienes tareas por realizar. Agrega una tarea, para poder tenerlas enlistadas</p>
-        <img height="150" width="150" src="https://cdn-icons-png.flaticon.com/512/8944/8944502.png" alt="thinking"></img>
+        <img height="150" width="150" src="https://cdn-icons-png.flaticon.com/512/8944/8944502.png" alt="thinking" loading="lazy" />
       </section>
     )
 

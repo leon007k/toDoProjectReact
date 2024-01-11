@@ -45,7 +45,6 @@ export const TaskForm = ({ modalDinamic, funcToPerform, typeOfAction = 'add', ta
    * When using Usecallback, you make sure that the UseEffect is not unnecessarily executed 
    * Every time the component is rendered due to the recreation of the Registertask function.
   */
-
   const registerTask = useCallback((event) => {
     // * Condition in case the data is stored by clicking on
     if (event !== undefined) event.preventDefault()

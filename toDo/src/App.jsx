@@ -1,31 +1,45 @@
 import './App.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ThingsToDo } from './components/ToDoList/ThingsToDo.jsx';
 import { TaskForm } from './components/TaskForm/TaskForm.jsx';
 import { Button } from './components/UI/Button.jsx';
+import { saveTaskToStorage } from './storage/index.js'
 
 function App() {
-  const [taskToDo, setNewTask] = useState([
-    {
-      'id': 1,
-      'title': 'prueba 1',
-      'description': 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.Veniam dolor ad alias praesentium eaque? Quas, rerum fugiat, sed non, iste culpa repudiandae nulla quidem quo enim voluptate et iusto eos?'
-    },
-    {
-      'id': 2,
-      'title': 'prueba 2',
-      'description': 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni modi quam dicta aut in dolor cupiditate tempore, a et fuga. Delectus quia magni quis repudiandae voluptatibus officiis debitis nobis architecto! Ex est molestias labore ut at natus corporis maiores odio minima, amet sit optio aspernatur placeat quos ducimus voluptas tempora quidem dolorum accusantium, similique atque rerum exercitationem aperiam eos? Provident!'
-    }
-  ])
+  const [taskToDo, setTaskToDo] = useState(() => {
+    const cookiesTask = window.localStorage.getItem('thingsToDo')
+    return cookiesTask
+      ? JSON.parse(cookiesTask)
+      : [
+        {
+          'id': 1,
+          'title': 'prueba 1',
+          'description': 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.Veniam dolor ad alias praesentium eaque? Quas, rerum fugiat, sed non, iste culpa repudiandae nulla quidem quo enim voluptate et iusto eos?'
+        },
+        {
+          'id': 2,
+          'title': 'prueba 2',
+          'description': 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni modi quam dicta aut in dolor cupiditate tempore, a et fuga. Delectus quia magni quis repudiandae voluptatibus officiis debitis nobis architecto! Ex est molestias labore ut at natus corporis maiores odio minima, amet sit optio aspernatur placeat quos ducimus voluptas tempora quidem dolorum accusantium, similique atque rerum exercitationem aperiam eos? Provident!'
+        }
+      ]
+  })
+
+
   const [isShowModal, setIsShowModal] = useState(false)
   const [modalDynamicContent, setModalDynamicContent] = useState({
     typeOfActionModal: '',
     idTaskModal: '',
   })
 
+  // * We save our tasks in localStorage to avoid losing adjustments
+  useEffect(() => {
+    saveTaskToStorage(taskToDo)
+  }, [taskToDo])
+
+
   // * We allow the information of the pending task to be saved
   const registerNewTask = (newTask) => {
-    setNewTask(prevListTask => {
+    setTaskToDo(prevListTask => {
       return [...prevListTask, newTask]
     }
     )
@@ -33,7 +47,7 @@ function App() {
 
   // * It will allow us to eliminate a task from our list
   const deleteTask = idTask => {
-    setNewTask(prevListTask => {
+    setTaskToDo(prevListTask => {
       const updateDListTask = prevListTask.filter(taskFilter => taskFilter.id !== idTask)
       console.log(updateDListTask?.title)
       return updateDListTask
@@ -42,7 +56,7 @@ function App() {
 
   // * It will allow us to edit a task of our list
   const editTask = taskDataToEdit => {
-    setNewTask(prevListTask => {
+    setTaskToDo(prevListTask => {
       const updateEListTask = prevListTask.map(taskFilter => {
         if (taskFilter.id === taskDataToEdit?.id) {
           return {
