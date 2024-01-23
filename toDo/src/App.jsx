@@ -6,6 +6,7 @@ import { Button } from './components/UI/Button.jsx';
 import { saveTaskToStorage } from './storage/index.js'
 
 function App() {
+  // ! TODO: Crear un custom hook encargado de simular un crud de las tareas
   const [taskToDo, setTaskToDo] = useState(() => {
     const cookiesTask = window.localStorage.getItem('thingsToDo')
     return cookiesTask
@@ -49,7 +50,6 @@ function App() {
   const deleteTask = idTask => {
     setTaskToDo(prevListTask => {
       const updateDListTask = prevListTask.filter(taskFilter => taskFilter.id !== idTask)
-      console.log(updateDListTask?.title)
       return updateDListTask
     })
   }

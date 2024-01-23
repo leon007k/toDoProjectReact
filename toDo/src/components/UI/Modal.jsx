@@ -2,7 +2,7 @@ import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types';
 import { Button } from "./Button"
 import './Modal.css';
-import { useEffect } from 'react';
+import { useCloseEscModal } from '../../hooks/useCloseEscModal';
 
 
 // * This element is responsible for showing the bottom of the modal
@@ -23,7 +23,6 @@ const ModalOverlay = ({ modalTitle, children, onOffModal }) => {
           <Button
             type='button'
             addClassName='btn-close'
-
             aria-label='Close'
             actionButton={onOffModal}
           ></Button>
@@ -37,15 +36,8 @@ const ModalOverlay = ({ modalTitle, children, onOffModal }) => {
 const portalElement = document.getElementById('overlays');
 
 export const Modal = ({ modalTitle, children, onOffModal }) => {
-
   // * It will allow us to close the modal by clicking on the ESC key
-  useEffect(() => {
-    const closeModal = e => {
-      if (e.key === 'Escape') onOffModal()
-    }
-    window.addEventListener('keydown', closeModal)
-    return () => window.removeEventListener('keydown', closeModal)
-  }, [onOffModal])
+  useCloseEscModal({ onOffModal })
 
   const modalContent = onOffModal ? children : null
 
