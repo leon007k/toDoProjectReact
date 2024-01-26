@@ -28,7 +28,7 @@ export const ThingsToDo = ({ taskToDo, onDeleteTask, onEditTask }) => {
 }
 
 ThingsToDo.propTypes = {
-  taskToDo: PropTypes.object,
+  taskToDo: PropTypes.array,
   onDeleteTask: PropTypes.func,
   onEditTask: PropTypes.func
 }
