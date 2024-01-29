@@ -1,30 +1,14 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { Button } from '../UI/Button';
 import { Modal } from '../UI/Modal'
 import './TaskForm.css'
+import { useControlTaskForm } from '../../hooks/useControlTaskForm';
 
 export const TaskForm = ({ modalDinamic, funcToPerform, typeOfAction = 'add', taskData }) => {
-
-  const [inputsValues, setInputsValues] = useState({
-    titleTask: '',
-    descriptionTask: ''
-  })
-  const [requiredTitle, setRequiredTitle] = useState(false)
-
-  useEffect(() => {
-    if (typeOfAction === 'edit')
-      setInputsValues({
-        titleTask: taskData?.title || '',
-        descriptionTask: taskData?.description || ''
-      })
-  }, [typeOfAction, taskData])
-
-  const alertRequireTitle = () => {
-    setRequiredTitle(true)
-    alert('Lo sentimos, favor de agregar un titulo a su tarea')
-    return
-  }
+  const { titleTask, descriptionTask, requiredTitle, setInputsValues, setRequiredTitle } = useControlTaskForm(
+    { typeOfAction, taskData }
+  )
 
   // * Functions responsible for obtaining the values entered
   const addTitleTask = event => {
@@ -49,29 +33,25 @@ export const TaskForm = ({ modalDinamic, funcToPerform, typeOfAction = 'add', ta
     // * Condition in case the data is stored by clicking on
     if (event !== undefined) event.preventDefault()
 
-    const isTitleValid = inputsValues.titleTask.trim() !== ''
+    const isTitleValid = titleTask.trim() !== ''
 
     if (!isTitleValid) {
-      alertRequireTitle()
+      setRequiredTitle(true)
+      alert('Lo sentimos, favor de agregar un titulo a su tarea')
       return
     }
 
-    let newtaskTodo
-
-    if (taskData) {
-      newtaskTodo = {
+    const newtaskTodo = taskData
+      ? {
         id: taskData.id,
-        title: inputsValues.titleTask,
-        description: inputsValues.descriptionTask
+        title: titleTask,
+        description: descriptionTask
       }
-    } else {
-      newtaskTodo = {
+      : {
         id: Math.random(),
-        title: inputsValues.titleTask,
-        description: inputsValues.descriptionTask
+        title: titleTask,
+        description: descriptionTask
       }
-    }
-
 
     // * We send the information to record the new task
     funcToPerform(newtaskTodo)
@@ -84,22 +64,7 @@ export const TaskForm = ({ modalDinamic, funcToPerform, typeOfAction = 'add', ta
 
     // * We close the modal after finishing saving the data
     modalDinamic()
-  }, [inputsValues.titleTask, inputsValues.descriptionTask, taskData, funcToPerform, setInputsValues, modalDinamic])
-
-  useEffect(() => {
-    const saveData = evt => {
-      if (modalDinamic && evt.key === 'Enter' && inputsValues.titleTask.length > 0) {
-        registerTask()
-      } else if (modalDinamic && evt.key === 'Enter') {
-        alertRequireTitle()
-        return
-      }
-    }
-
-    window.addEventListener('keydown', saveData)
-
-    return () => window.removeEventListener('keydown', saveData)
-  }, [inputsValues.titleTask, registerTask, modalDinamic])
+  }, [titleTask, descriptionTask])
 
   return (
     <Modal modalTitle={typeOfAction === 'add' ? 'Agregar nueva tarea' : 'Editar tarea'} onOffModal={modalDinamic}>

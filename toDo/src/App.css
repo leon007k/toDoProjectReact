@@ -11,10 +11,41 @@
   color: #005a34;
 }
 
+.scrollY {
+  overflow-y: scroll;
+}
+
 .btn-icon-link:hover .task-icon {
   transform: rotate(6deg);
   -webkit-transform: rotate(6deg);
   -moz-transform: rotate(6deg);
   -ms-transform: rotate(6deg);
   -o-transform: rotate(6deg);
+}
+
+.task-container {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 555px;
+  overflow-x: hidden;
+}
+
+.task-container::-webkit-scrollbar-thumb {
+  background-color: #005a34;
+  border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
+}
+
+.task-container::-webkit-scrollbar {
+  background-color: #d4d4d4;
+  border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
 }

@@ -1,19 +1,11 @@
 import PropTypes from 'prop-types';
 import { Card } from "../UI/Card"
 import { Button } from '../UI/Button';
-import { useState } from 'react';
+import { useTasks } from '../../hooks/useTask';
 
 export function Task({ task, editTaskHandler, deleteTaskHandler }) {
 
-  // * Matine the state of resolution for each specific task
-  const [resolvedTasks, setResolvedTasks] = useState({})
-
-  // * Will be in charge of updating the state of resolution for each specific task
-  const toggleResolvedTask = taskId => {
-    const updateTaskResolved = { ...resolvedTasks }
-    updateTaskResolved[taskId] = !updateTaskResolved[taskId]
-    setResolvedTasks(updateTaskResolved)
-  }
+  const { resolvedTasks, toggleResolvedTask } = useTasks()
 
   return (
     <>
